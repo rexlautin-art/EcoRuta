@@ -1,0 +1,19 @@
+COMO FUNCIONA EL ENVIO (EMISORA -> PUENTE -> RECEPTORA)
+
+1) En el PC, abre el PUENTE: doble clic en iniciar_ecoruta.bat (Windows) o iniciar_ecoruta.sh.
+   Deja esa ventana abierta. Muestra la direccion para el celular (ej. http://192.168.1.20:3000).
+   Para exigir PIN al enviar: servidor/config.json -> "pin".
+2) En el PC, abre la app EMISORA ("EcoRuta Admin"), pestana "Enviar".
+   Direccion del puente: http://localhost:3000   (y el PIN si lo configuraste).
+3) En el celular, app EcoRuta -> Ajustes -> Servidor: escribe la direccion del paso 1.
+   Dentro de la app aparece el boton del sobre (abajo a la derecha). La app descarga los mensajes una vez cada 24 h
+   (o al tocar 'Actualizar ahora'), los guarda en el celular y los borra 24 h despues de recibirlos.
+
+Pruebas automaticas del puente:  node servidor/prueba_puente.cjs   (y node servidor/prueba_servidor.cjs)
+
+LIMITES CONOCIDOS
+- La app del celular solo descarga cuando esta abierta (revisa cada minuto si ya toca). Recibir con la app cerrada requiere notificaciones push.
+- Guardar archivos ("Descargar") funciona en el navegador; en la APK el WebView actual no maneja descargas y
+  haria falta un metodo nativo de guardado en NativeBridge.java. Avisos, rutas, textos, imagenes y paginas se
+  muestran sin problema.
+- El PIN viaja sin cifrar en http:// (Wi-Fi local). Si el puente va a internet, usa HTTPS.
